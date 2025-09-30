@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body class="contenedorr">
+    <div class="image-container">
+        <img src="./img/Rimage.jpg" alt="image">
+    </div>
+
+    <div class="login-container">
+        <form action="/iniciosesion" method="POST">
+            <h2>Iniciar Sesión</h2>
+
+            <label for="correo">Correo:</label>
+            <input type="email" id="correo" name="correo" required>
+            
+            <label for="contraseña">Contraseña:</label>
+            <input type="password" id="contraseña" name="contraseña" required>
+            <a href="forgot-password">recupera tu contraseña</a>
+            <button type="submit">Iniciar sesión</button>
+
+            <% if (errorMessage) { %>
+                <p class="errorMessage"><%= errorMessage %></p>
+            <% } %> 
+            <% if (successMessage) { %>
+                <p class="successMessage"><%= successMessage %></p>
+            <% } %> 
+
+        </form>
+               
+    </div>
+</body>
+</html>
+    

@@ -1,0 +1,31 @@
+<nav>
+    <% if (user.rol === 1) { %>
+        <!-- solo mostrar a administradores -->
+        <a href="index"><i class='bx bx-home'></i> <span>Dashboard</span></a>
+    <% } %>
+    <a href="/productos"><i class='bx bx-box'></i> <span>Productos</span></a>
+    <a href="comentarios"><i class='bx bx-receipt'></i> <span>Comentarios</span></a>
+    <% if (user.rol === 3) { %>
+    <a href="reservaciones"><i class='bx bxs-calendar-edit'></i> <span>Reservaciones</span></a>
+    <% } %>
+
+    <% if (user.rol === 1) { %>
+    <a href="ordenes-admin"><i class='bx bx-history'></i> <span>Ordenes</span></a>
+    <% } %>
+    <% if (user.rol === 2) { %>
+    <a href="ordenes"><i class='bx bx-history'></i> <span>Ordenes</span></a>
+    <% } %>
+    <% if (user.rol === 3) { %>
+    <a href="ordenes-recepcionista"><i class='bx bx-history'></i> <span>Ordenes</span></a>
+    <% } %>
+
+    <a href="/configuracion"><i class='bx bx-cog'></i> <span>Configuración</span></a>
+    <a href="perfil"><i class='bx bx-user'></i> <span>Perfil</span></a>
+    <% if (user.rol === 1) { %>
+        <a href="/registro"><i class='bx bx-note'></i> <span>Registrar</span></a>
+    <% } %>
+    <% if (user.rol === 1) { %>
+        <a href="/users"><i class='bx bx-user'></i> <span>Usuarios</span></a>
+    <% } %>
+    <a href="logout"><i class='bx bx-log-out'></i> <span>Cerrar sesión</span></a>
+</nav>

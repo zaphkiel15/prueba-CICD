@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Configuración del sistema</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        .errorMessage {
+        display: flex; 
+        flex-direction: row; 
+        align-items: center; 
+        width: 100%; 
+        padding: 10px;
+        margin: 5px 0;
+        color: #fff;
+        background-color: #d9534f; 
+        border: 1px solid #b52b27;
+        border-radius: 5px;
+        text-align: center;
+        font-weight: bold;
+        }
+        .successMessage {
+        display: flex; 
+        flex-direction: row; 
+        align-items: center; 
+        width: 100%; 
+        padding: 10px;
+        margin: 5px 0;
+        color: #fff;
+        background-color: #4fd961; 
+        border: 1px solid #27b53a;
+        border-radius: 5px;
+        text-align: center;
+        font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard">
+        <aside class="sidebar">
+            <div class="top">
+                <div class="logo">
+                    <img src="./img/logo.jpeg" alt="">
+                    <span>pepe's</span>
+                </div>
+                <div class="toggle">
+                    <i class='bx bx-x'></i>
+                </div>
+            </div>
+            <%- include('rutas')%>
+        </aside>
+
+        <main class="content">
+            <h1>Configuración del sistema</h1>
+            <% if (typeof errorMessage !== "undefined" && errorMessage) { %>
+                <p class="errorMessage"><%= errorMessage %></p>
+            <% } %>
+        
+            <% if (typeof successMessage !== "undefined" && successMessage) { %>
+                <p class="successMessage"><%= successMessage %></p>
+            <% } %>
+
+            <div class="configuracion-form">
+                <h2 onclick="toggleSection('seguridad')">Seguridad <i class='bx bx-chevron-down'></i></h2>
+                <form id="seguridad" action="/configuracion/updatePassword" method="POST">
+                    <label for="contraseña-actual">Contraseña actual:</label>
+                    <input type="password" id="contraseña-actual" name="contraseña_actual"
+                        placeholder="Ingresa tu contraseña actual" />
+
+                    <label for="nueva-contraseña">Nueva contraseña:</label>
+                    <input type="password" id="nueva-contraseña" name="nueva_contraseña"
+                        placeholder="Ingresa tu nueva contraseña" />
+
+                    <label for="confirmar-contraseña">Confirmar nueva contraseña:</label>
+                    <input type="password" id="confirmar-contraseña" name="confirmar_contraseña"
+                        placeholder="Confirma tu nueva contraseña" />
+
+                    <button type="submit">Guardar cambios</button>
+                </form>
+            </div>
+            <% if (user.rol === 2) { %>
+            <div class="configuracion-form">
+                <h2 onclick="toggleSection('notificaciones')">Preferencias de notificaciones <i class='bx bx-chevron-down'></i></h2>
+                <form id="notificaciones" action="/configuracion/notificacion" method="POST">
+                    <label for="notis_correo">Recibir notificaciones por correo</label>
+                    <div>
+                        <input type="checkbox" id="notis_correo" name="notis_correo" <%= notificacionConfig.notis_correo ? "checked" : "" %> />
+                    </div>
+                    <label for="notis_SMS">Recibir notificaciones por SMS</label>
+                    <div>
+                        <input type="checkbox" id="notis_SMS" name="notis_SMS" <%= notificacionConfig.notis_SMS ? "checked" : "" %> />
+                    </div>
+                    <button type="submit">Guardar cambios</button>
+                </form>
+            </div>
+            <% } %>
+            <% if (user.rol === 2) { %>
+            <div class="configuracion-form">
+                <h2 onclick="toggleSection('pedidos')">Preferencias de pedidos <i class='bx bx-chevron-down'></i></h2>
+                <form id="pedidos" action="/configuracion/pedido" method="POST">
+                    <label for="direccion">Dirección</label>
+                    <input type="text" id="direccion" name="direccion" value="<%= pedidoConfig.direccion || "" %>" />
+            
+                    <label for="metodo_pago">Método de pago</label>
+                    <select id="metodo_pago" name="metodo_pago">
+                        <option value="tarjeta" <%= pedidoConfig.metodo_pago === "tarjeta" ? "selected" : "" %>>Tarjeta</option>
+                        <option value="efectivo" <%= pedidoConfig.metodo_pago === "efectivo" ? "selected" : "" %>>Efectivo</option>
+                        <option value="paypal" <%= pedidoConfig.metodo_pago === "paypal" ? "selected" : "" %>>PayPal</option>
+                    </select>
+            
+                    <label for="vegetariano">Vegetariano</label>
+                    <input type="checkbox" id="vegetariano" name="vegetariano" <%= pedidoConfig.vegetariano ? "checked" : "" %> />
+            
+                    <label for="vegano">Vegano</label>
+                    <input type="checkbox" id="vegano" name="vegano" <%= pedidoConfig.vegano ? "checked" : "" %> />
+            
+                    <label for="sin_gluten">Sin gluten</label>
+                    <input type="checkbox" id="sin_gluten" name="sin_gluten" <%= pedidoConfig.sin_gluten ? "checked" : "" %> />
+            
+                    <button type="submit">Guardar cambios</button>
+                </form>
+            </div>
+            <% } %>
+        </main>
+    </div>
+
+    <script>
+        function toggleSection(id) {
+            const section = document.getElementById(id);
+            const icon = section.previousElementSibling.querySelector('i');
+            if (section.style.display === "none" || section.style.display === "") {
+                section.style.display = "block";
+                icon.classList.remove('bx-chevron-down');
+                icon.classList.add('bx-chevron-up');
+            } else {
+                section.style.display = "none";
+                icon.classList.remove('bx-chevron-up');
+                icon.classList.add('bx-chevron-down');
+            }
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('collapsed');
+        }
+    </script>
+
+    <script src="js/nav.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard pepe's</title>
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Iconos -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+             // Cargar Google Charts
+        google.charts.load('current', { packages: ['corechart'] });
+        google.charts.setOnLoadCallback(drawCharts);
+
+        function drawCharts() {
+            drawLineChart();
+            drawPieChart();
+            drawBarChart(); // Agregamos la gráfica de barras
+        }
+
+        // Gráfica de líneas
+        function drawLineChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Día', 'Visitas'],
+                ['Lunes', 100],
+                ['Martes', 120],
+                ['Miércoles', 150],
+                ['Jueves', 180],
+                ['Viernes', 200],
+                ['Sábado', 220],
+                ['Domingo', 250]
+            ]);
+
+            var options = {
+                title: 'Visitas por día',
+                curveType: 'function',
+                legend: { position: 'bottom' }
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('linechart_div'));
+            chart.draw(data, options);
+        }
+
+        // Gráfica circular (Pie Chart)
+        function drawPieChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Categoría', 'Cantidad'],
+                ['Clientes Nuevos', 200],
+                ['Clientes Recurrentes', 300]
+            ]);
+
+            var options = {
+                title: 'Clientes Nuevos vs Recurrentes',
+                pieHole: 0.4
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart_div'));
+            chart.draw(data, options);
+        }
+
+        // Gráfica de barras
+        function drawBarChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Platillo', 'Ventas'],
+                ['Tacos', 500],
+                ['Hamburguesas', 700],
+                ['Pizza', 400],
+                ['Sushi', 350],
+                ['Ensaladas', 300]
+            ]);
+
+            var options = {
+                title: 'Ventas por Platillo',
+                bars: 'horizontal', 
+                legend: { position: 'none' }
+            };
+
+            var chart = new google.visualization.BarChart(document.getElementById('barchart_div'));
+            chart.draw(data, options);
+        }
+    </script>
+</head>
+
+<body>
+
+    <!-- <div id="modal" class="login-container">
+        <form class="login-form">
+            <h2>Iniciar sesión</h2>
+            <input type="text" placeholder="Usuario" required />
+            <input type="password" placeholder="Contraseña" required />
+            <a href="registro">No tienes cuenta? Registrate</a>
+            <button type="submit">Ingresar</button>
+            <button id="cerrar">cerrar</button>
+        </form>
+    </div> -->
+
+
+    <div class="dashboard">
+        <aside class="sidebar">
+            <div class="top">
+                <div class="logo">
+                    <img src="./img/logo.jpeg" alt=""> 
+                    <span>pepe's</span>
+                </div>
+                <div class="toggle">
+                    <i class='bx bx-x'></i>
+                </div>
+            </div>
+            <%- include('rutas')%>
+        </aside>
+       
+        <main class="content">
+            <h1>Bienvenido!, <%= user.nombre %></h1>
+            <div class="cards">
+                <div class="card">
+                    <h3>Estadísticas</h3>
+                    <p>+500 clientes</p>
+                </div>
+                <div class="card">
+                    <h3>Ventas</h3>
+                    <p>$10,000 MXN</p>
+                </div>
+                <div class="card">
+                    <h3>Ordenes</h3>
+                    <p>12 activos</p>
+                </div>
+            </div> 
+            <br>
+
+            <!-- Contenedor de la gráfica -->
+            <div class="charts-container">
+                <div id="linechart_div" class="chart"></div>
+                <div id="piechart_div" class="chart"></div>
+                <div id="barchart_div" class="chart"></div>
+            </div>
+
+            <!-- <button class="boton" id="login">iniciar sesion</button>  -->
+        </main>
+    </div>
+
+    <script src="js/nav.js"></script>
+    <!-- <script src="js/modal.js"></script> -->
+</body>
+
+</html>

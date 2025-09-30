@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Órdenes - Admin</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <style>
+        .btn-complete {
+            background-color: #007bff;
+        }
+
+        .btn-complete:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #39633f;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #388e3c;
+        }
+
+        .btn-delete {
+            background-color: #d9534f;
+        }
+
+        .btn-delete:hover {
+            background-color: #b52b27;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <aside class="sidebar">
+            <div class="top">
+                <div class="logo">
+                    <img src="./img/logo.jpeg" alt=""> 
+                    <span>pepe's</span>
+                </div>
+                <div class="toggle">
+                    <i class='bx bx-x'></i>
+                </div>
+            </div>
+            <%- include('rutas') %>
+        </aside>
+
+        <main class="content">
+            <h1>Gestión de Meseros</h1>
+
+            <% if (typeof errorMessage !== "undefined" && errorMessage) { %>
+                <p class="errorMessage"><%= errorMessage %></p>
+            <% } %>
+        
+            <% if (typeof successMessage !== "undefined" && successMessage) { %>
+                <p class="successMessage"><%= successMessage %></p>
+            <% } %>
+
+            <!-- Form to Add Mesero -->
+            <form action="/ordenes-admin/addMesero" method="POST">
+                <label for="nombre">Nombre del Mesero:</label>
+                <input type="text" id="nombre" name="nombre" required>
+                <button type="submit" class="btn">Agregar Mesero</button>
+            </form>
+
+            <!-- Table to Display Meseros -->
+            <h2>Lista de Meseros</h2>
+            <% if (meseros.length === 0) { %>
+                <p>No hay meseros registrados.</p>
+            <% } else { %>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% meseros.forEach(mesero => { %>
+                            <tr>
+                                <td><%= mesero._id %></td>
+                                <td><%= mesero.nombre %></td>
+                                <td><%= mesero.estado %></td>
+                                <td>
+                                    <button class="btn" onclick="editMesero('<%= mesero._id %>', '<%= mesero.nombre %>')">Editar</button>
+                                    <form action="/ordenes-admin/deleteMesero/<%= mesero._id %>" method="POST" style="display: inline;">
+                                        <button type="submit" class="btn-delete2">Eliminar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            <% } %>
+
+            <h2>Lista de Reservaciones</h2>
+            <% if (reservaciones.length === 0) { %>
+                <p>No hay reservaciones registradas.</p>
+            <% } else { %>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID Reservación</th>
+                            <th>Usuario</th>
+                            <th>Correo</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
+                            <th>Mesero</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% reservaciones.forEach(reservacion => { %>
+                            <tr>
+                                <td><%= reservacion.id_reservacion %></td>
+                                <td><%= reservacion.usuario_nombre %></td>
+                                <td><%= reservacion.usuario_correo %></td>
+                                <td><%= new Date(reservacion.start).toLocaleDateString("es-ES") %></td>
+                                <td><%= reservacion.estado_orden %></td>
+                                <td>
+                                    <% if (reservacion.estado_orden === "reservado") { %>
+                                        <form action="/ordenes-admin/assignMesero/<%= reservacion.id_reservacion %>" method="POST">
+                                            <select name="mesero_nombre" required>
+                                                <option value="">Seleccionar Mesero</option>
+                                                <% meseros.forEach(mesero => { %>
+                                                    <% if (mesero.estado === "Disponible") { %>
+                                                        <option value="<%= mesero.nombre %>"><%= mesero.nombre %></option>
+                                                    <% } %>
+                                                <% }) %>
+                                            </select>
+                                            <button type="submit" class="btn">Aplicar</button>
+                                        </form>
+                                    <% } else { %>
+                                        <span> 
+                                            <% if (reservacion.mesero_nombre) { %>
+                                                <%= reservacion.mesero_nombre %>
+                                            <% } else { %>
+                                                -
+                                            <% } %>
+                                        </span>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <% if (reservacion.estado_orden === "agendado") { %>
+                                        <form action="/ordenes-admin/completeOrder/<%= reservacion.id_reservacion %>" method="POST">
+                                            <button type="submit" class="btn btn-complete">Completar</button>
+                                        </form>
+                                    <% } else { %>
+                                        <span>-</span>
+                                    <% } %>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            <% } %>
+        </main>
+    </div>
+
+    <script>
+        function editMesero(id, nombre) {
+            const newName = prompt("Editar nombre del mesero:", nombre);
+            if (newName) {
+                fetch(`/ordenes-admin/editMesero/${id}`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ nombre: newName })
+                }).then(() => location.reload());
+            }
+        }
+    </script>
+</body>
+</html>

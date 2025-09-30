@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Órdenes - Recepcionista</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Iconos -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+    
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+    
+        th {
+            background-color: #39633f;
+            color: white;
+        }
+    
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    
+        tr:hover {
+            background-color: #ddd;
+        }
+    
+        p {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #555;
+        }
+
+        .btn-reservation {
+            padding: 0.5rem 1rem;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+        }
+
+        .btn-reservation:hover {
+            background-color: #388e3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <aside class="sidebar">
+            <div class="top">
+                <div class="logo">
+                    <img src="./img/logo.jpeg" alt=""> 
+                    <span>pepe's</span>
+                </div>
+                <div class="toggle">
+                    <i class='bx bx-x'></i>
+                </div>
+            </div>
+            <%- include('rutas') %>
+        </aside>
+
+        <main class="content">
+            <h1>Órdenes Actuales</h1>
+        
+            <% if (ordenes.length === 0) { %>
+                <p>No hay órdenes registradas.</p>
+            <% } else { %>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID Orden</th>
+                            <th>Producto</th>
+                            <th>Estado</th>
+                            <th>Fecha de Orden</th>
+                            <th>Nombre del Usuario</th>
+                            <th>Correo del Usuario</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% ordenes.forEach(orden => { %>
+                            <tr>
+                                <td><%= orden.id_orden %></td>
+                                <td><%= orden.nombre_producto %></td>
+                                <td><%= orden.estado %></td>
+                                <td><%= new Date(orden.fecha_orden).toLocaleDateString("es-ES") %></td>
+                                <td><%= orden.nombre_usuario %></td>
+                                <td><%= orden.correo_usuario %></td>
+                                <td>
+                                    <% if (orden.estado == "pendiente") { %>
+                                        <button 
+                                            class="btn-reservation" 
+                                            onclick="location.href='/reservaciones?id_orden=<%= orden.id_orden %>&nombre=<%= orden.nombre_usuario %>&email=<%= orden.correo_usuario %>'">
+                                            Crear Reservación
+                                        </button>
+                                    <% } else { %>
+                                        <span>Reservado</span>
+                                    <% } %>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            <% } %>
+        </main>
+    </div>
+
+    <script src="js/nav.js"></script>
+</body>
+</html>

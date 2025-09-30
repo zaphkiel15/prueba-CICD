@@ -1,0 +1,64 @@
+/* Estilos para los comentarios */
+.coments {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    max-width: 800px; 
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+
+.coment {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem;
+    border: 1px solid #ffffff;
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    max-width: 780px;
+    opacity: 0; 
+    animation: fadeIn 0.5s ease-out forwards; 
+    transform: translateY(20px); 
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+}
+
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+.coment:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+}
+
+.coment-info {
+    display: flex;
+    gap: 1rem;
+}
+
+.coment-info img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.coment-info h3 {
+    font-size: 1.2rem;
+}
+
+.coment-info p {
+    font-size: 0.8rem;
+    color: #5f5f5f;
+}

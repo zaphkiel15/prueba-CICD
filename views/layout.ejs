@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>hola</title>
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Iconos -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+
+    <div id="modal" class="login-container">
+        <form class="login-form">
+            <h2>Iniciar sesión</h2>
+            <input type="text" placeholder="Usuario" required />
+            <input type="password" placeholder="Contraseña" required />
+            <button type="submit">Ingresar</button>
+            <button id="cerrar">cerrar</button>
+        </form>
+    </div>
+
+
+    <div class="dashboard">
+        <aside class="sidebar">
+            <div class="top">
+                <div class="logo">
+                    <img src="img\logo.jpeg" alt=""> 
+                    <span>pepe's</span>
+                </div>
+                <div class="toggle">
+                    <i class='bx-x'></i>
+                </div>
+            </div>
+            <nav>
+                <a href="index"><i class='bx bx-home'></i> Dashboard</a>
+                <a href="comentarios"><i class='bx bx-user'></i> Comentarios</a>
+                <a href="Productos"><i class='bx bx-box'></i> Productos</a>
+                <a href="perfil"><i class='bx bx-receipt'></i> Perfil</a>
+                <a href="/configuracion"><i class='bx bx-cog'></i> Configuración</a>
+                <a href="#"><i class='bx bx-log-out'></i> Cerrar sesión</a>
+            </nav>
+        </aside>

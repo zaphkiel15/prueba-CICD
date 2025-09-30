@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comentarios</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="comen.css" />
+    <!-- Iconos -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- Estilos para caja de texto de nuevos comentarios -->
+
+    <style>
+        .newcoment {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .newcoment input {
+            width: 80%;
+            padding: 0.5rem;
+            border: 1px solid #c9c8c8;
+            border-radius: 0.5rem;
+        }
+
+        .newcoment button {
+            padding: 0.5rem 2rem;
+            background-color: #2a9c1b;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+        }
+
+        .newcoment button:hover {
+            background-color: #125c0b;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="dashboard">
+        <aside class="sidebar">
+            <div class="top">
+                <div class="logo">
+                    <img src="./img/logo.jpeg" alt=""> 
+                    <span>pepe's</span>
+                </div>
+                <div class="toggle">
+                    <i class='bx bx-x'></i>
+                </div>
+            </div>
+            <%- include('rutas')%>
+        </aside>
+
+        <main class="content">
+            <!-- Cards con los comentarios de los clientes -->
+
+            <div class="comentarios">
+                <div class="coments">
+                    <h2>Comentarios</h2>
+
+                    <% if (user.rol === 2) { %>
+                    <form class="newcoment" action="/comentarios/agregar" method="POST">
+                        <input type="text" placeholder="Escribe un comentario..." id="comentario" name="comentario" >
+                        <button id="newComentarioBtn" type="submit">Enviar</button>
+                    </form>
+                    <% } %>
+
+                    <% comentarios.forEach(comentario => { %>
+                        <div class="coment">
+                            <div class="coment-info">
+                                <img style="object-fit: cover;" src="<%= comentario.usuario_foto ? comentario.usuario_foto : '/img/perfil.jpg' %>" alt="Foto de perfil">
+                                <div>
+                                    <h3><%= comentario.usuario_nombre %></h3>
+                                    <p><%= new Date(comentario.fecha_comentario).toLocaleDateString("es-ES") %></p>
+                                </div>
+                            </div>
+                            <p><%= comentario.comentario %></p>
+                            <% if (user.rol === 1) { %>
+                            <button 
+                            class="btn-delete" 
+                            onclick="confirmDelete(<%= comentario.id_comentario %>)">
+                            <i class='bx bxs-trash-alt'></i>
+                            </button>
+                            <% } %>
+                        </div>
+                    <% }) %>
+
+                    
+                </div>
+            </div>
+        </main>
+
+        <script src="js/nav.js"></script>
+        <script>
+            function confirmDelete(idComentario) {
+                const isConfirmed = confirm("¿Estás seguro que quieres borrar este comentario?");
+                if (isConfirmed) {
+                    location.href = `/comentarios/eliminar/${idComentario}`;
+                }
+            }
+        </script>
+
+</body>
+
+</html>
