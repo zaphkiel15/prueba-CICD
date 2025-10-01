@@ -4,7 +4,7 @@ const dotenv = require("dotenv");
 dotenv.config(); 
 
 const sessionMiddleware = session({
-    secret: process.env.SESSION_SECRETKEY, // Replace with a strong secret key
+    secret: process.env.SESSION_SECRET, // Replace with a strong secret key
     resave: false, // Prevents resaving session if unmodified
     saveUninitialized: false, // Prevents saving uninitialized sessions
     cookie: {
