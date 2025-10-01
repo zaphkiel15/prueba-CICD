@@ -36,3 +36,24 @@ jobs:
           annotations: ${{ steps.meta.outputs.annotations }}
           provenance: true
           sbom: true
+          build args: |
+            SESSION_SECRETKEY=${{ secrets.SESSION_SECRETKEY }}
+            PORT=${{ vars.PORT }}
+            MONGO_URI=${{ secrets.MONGO_URI }}
+            DB_HOST=${{ vars.DB_HOST }}
+            DB_USER=${{ vars.DB_USER }}
+            DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+            DB_NAME=${{ vars.DB_NAME }}
+            DB_PORT=${{ vars.DB_PORT }}
+            CLIENT_ID=${{ secrets.CLIENT_ID }}
+            CLIENT_SECRET=${{ secrets.CLIENT_SECRET }}
+            REDIRECT_URI=${{ secrets.REDIRECT_URI }}
+            TOKEN_PATH=${{ secrets.TOKEN_PATH }}
+            SCOPES=${{ secrets.SCOPES }}
+            CALENDAR_ID=${{ secrets.CALENDAR_ID }}
+            EMAIL_HOST=${{ vars.EMAIL_HOST }}
+            EMAIL_PORT=${{ vars.EMAIL_PORT }}
+            EMAIL_USER=${{ secrets.EMAIL_USER }}
+            EMAIL_PASS=${{ secrets.EMAIL_PASS }}
+            RECAPTCHA_SECRET_KEY=${{ secrets.RECAPTCHA_SECRET_KEY }}
+            RECAPTCHA_SITE_KEY=${{ secrets.RECAPTCHA_SITE_KEY }}
