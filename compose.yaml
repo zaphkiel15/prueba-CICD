@@ -13,6 +13,26 @@ services:
       context: .
     environment:
       NODE_ENV: production
+      SESSION_SECRET: ${SESSION_SECRET}
+      PORT: ${PORT}
+      MONGO_URI: ${MONGO_URI}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      CLIENT_SECRET: ${CLIENT_SECRET}
+      CLIENT_ID: ${CLIENT_ID}
+      REDIRECT_URI: ${REDIRECT_URI}
+      TOKEN_PATH: ${TOKEN_PATH}
+      SCOPES: ${SCOPES}
+      CALENDAR_ID: ${CALENDAR_ID}
+      EMAIL_HOST: ${EMAIL_HOST}
+      EMAIL_PORT: ${EMAIL_PORT}
+      EMAIL_USER: ${EMAIL_USER}
+      EMAIL_PASS: ${EMAIL_PASS}
+      RECAPTCHA_SECRET_KEY: ${RECAPTCHA_SECRET_KEY}
+      RECAPTCHA_SITE_KEY: ${RECAPTCHA_SITE_KEY}
     ports:
       - 5050:5050
 
