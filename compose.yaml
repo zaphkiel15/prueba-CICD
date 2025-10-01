@@ -34,7 +34,7 @@ services:
       RECAPTCHA_SECRET_KEY: ${RECAPTCHA_SECRET_KEY}
       RECAPTCHA_SITE_KEY: ${RECAPTCHA_SITE_KEY}
     ports:
-      - 5050:5050
+      - 3000:3000
 
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to

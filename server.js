@@ -18,7 +18,7 @@ const meseroController = require("./core/controllers/meseroController");
 const { google } = require("googleapis");
 //variables de entorno
 dotenv.config();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 
 connectToMongoDB();
 app.use(express.json());
