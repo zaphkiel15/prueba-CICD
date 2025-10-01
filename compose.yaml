@@ -9,6 +9,8 @@
 # https://github.com/docker/awesome-compose
 services:
   server:
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     build:
       context: .
     environment:
