@@ -37,7 +37,7 @@ jobs:
           provenance: true
           sbom: true
           build-args: |
-            SESSION_SECRET=${{ secrets.SESSION_SECRETKEY }}
+            SESSION_SECRET=${{ secrets.SESSION_SECRET }}
             PORT=${{ vars.PORT }}
             MONGO_URI=${{ secrets.MONGO_URI }}
             DB_HOST=${{ vars.DB_HOST }}
