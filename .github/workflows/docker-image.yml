@@ -36,7 +36,7 @@ jobs:
           annotations: ${{ steps.meta.outputs.annotations }}
           provenance: true
           sbom: true
-          build args: |
+          build-args: |
             SESSION_SECRETKEY=${{ secrets.SESSION_SECRETKEY }}
             PORT=${{ vars.PORT }}
             MONGO_URI=${{ secrets.MONGO_URI }}
